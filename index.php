@@ -1,23 +1,20 @@
 <?php
 
-	session_start();
+		define('DB_SERVER', 'localhost');
+   		define('DB_USERNAME', 'root');
+  		define('DB_PASSWORD', '');
+   		define('DB_DATABASE', 'mum');
+   
 
-	require('fpdf/fpdf.php');
-	
-	$uname = "";
-	$pword = "";
-	$email = "";
-	$errorMessage = "";
+
+	session_start();
 
 	$comment="";
 
+/*
 	if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
   		require 'configure.php';
-
-  		$uname = $_POST['username'];
-  		$pword = $_POST['password'];
-  		$email = $_POST['email'];
 
   		$database = "mum";
 
@@ -25,34 +22,15 @@
 
   		if ($db_found)
   		{    
-    		$SQL = $db_found->prepare('SELECT * FROM users WHERE Username = ?');
+    		$SQL = $db_found->prepare('SELECT message_content FROM comments');
     		$SQL->bind_param('s', $uname);
     		$SQL->execute();
     		$result = $SQL->get_result();
     		print "found";
-
-    		if ($result->num_rows > 0)
-    		{
-      			$errorMessage = "Username already taken.";
-    		}
-
-    		else
-    		{
-      			$hash = md5( rand(0,1000) );
-      			$phash = password_hash($pword, PASSWORD_DEFAULT);
-      			$SQL = $db_found->prepare("INSERT INTO users (Username, Password, Email, Hash) VALUES (?, ?, ?, $hash)");
-      			$SQL->bind_param('ss', $uname, $phash);
-      			$SQL->execute();
-
-      			header ("Location: index.php");
-    		}
     	}
+    }
 
-    	else
-    	{
-    		$errorMessage = "Database Not Found";
- 		}
- 	}
+    */
 
 	function regenerateToken()
 	{
@@ -133,8 +111,25 @@
 
 	function createTrackPage($track_id)
 	{
+
+        $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
+
+		$t_title = getTrackName($track_id);
+		$t_artists = getTrackArtist($track_id);
+		$t_t_artists= implode(' , ', $t_artists);
+		$t_album = getTrackAlbum($track_id);
+
+		$t_release_date = getTrackReleaseDate($track_id);
+
 		if (file_exists("Content/Images/Albums/".$track_id.'.jpg') == FALSE)
 			file_put_contents("Content/Images/Albums/".$track_id.'.jpg', file_get_contents(getTrackCover($track_id)));
+		$sql = "INSERT INTO songs (id,title,artist,album,data) 
+		VALUES ('$track_id','$t_title','$t_t_artists','$t_album','$t_release_date')";
+		if ($db->query($sql) === TRUE) {
+  			$ok=1;}
+		else $ok=0;
+  		$db->close();
+
 
 		if (file_exists("Tracks/".$track_id.".php") == FALSE)
 		{
@@ -166,15 +161,15 @@
 				<button onclick=\"myFunction()\">Register</button>
 			</div>
 		</div>
-
+				$title
 		<div class=\"metadata\">
 			<img src=\"../Content/Images/Albums/".$track_id.".jpg\">
 			<p>Title: ".getTrackName($track_id)."</p>
-			<p>Artist(s): ".getTrackArtist($track_id)."</p>
-			<p>Album: ".getTrackAlbum($track_id)." (Track number on album: ".getTrackNumber($track_id)." |  Disc Number: ".getDiscNumber($track_id).")</p>
-			<p>Release Date: ".getTrackReleaseDate($track_id)."</p>
-			<p id=\"demo\"></p>
-			<button onclick=\"exportPDF()\">Export data as PDF</button>
+			<p>Artist(s): ".implode(' , ', $t_artists)."</p>
+			<p>Album: ".$t_album." (Track number on album: ".getTrackNumber($track_id)." |  Disc Number: ".getDiscNumber($track_id).")</p>
+			<p>Release Date: ".$t_release_date."</p>
+		</div>
+
 		</div>
 
 		<div class=\"comments\">
@@ -194,21 +189,6 @@
 				show.style.display = \"none\";
 			}
 		}
-
-		function exportPDF()
-		{
-			`<?php
-				echo \"<h2>PHP is Fun!</h2>\";
-
-				require('fpdf.php');
-
-				\$pdf = new FPDF();
-				\$pdf->AddPage();
-				\$pdf->SetFont('Arial','B',16);
-				\$pdf->Cell(40,10,'Hello World!');
-				\$pdf->Output(\"I\", \"".$track_id."\");
-			?>`
-		}
 	</script>
 
 	</body>
@@ -216,6 +196,17 @@
 
 			fwrite($myfile, $page_content);
 		}
+
+		$date = DateTime::createFromFormat("Y-m-d", $t_release_date);
+		$year = $date->format("Y");
+
+		$track_info = array(
+							'artists' => implode(',', $t_artists),
+							'album' => $t_album,
+							'release_date' => $year
+		);
+
+		return $track_info;
 	}
 
 	function getTrackName($track_id)
@@ -265,15 +256,21 @@
 
 		$result = json_decode($result, true);
 
-		$track_artists = "";
+		// $track_artists = "";
 
-		foreach ($result['artists'] as $artist)
-		{
+		// foreach ($result['artists'] as $artist)
+		// {
 
-			$track_artists .= $artist['name']." ";
+		// 	$track_artists .= $artist['name']." ";
+		// }
+
+		$output = array();
+
+		foreach ($result['artists'] as $artist) {
+			array_push($output, $artist['name']);
 		}
 
-		return $track_artists;
+		return $output;
 	}
 
 	function getTrackReleaseDate($track_id)
@@ -298,7 +295,12 @@
 
 		$result = json_decode($result, true);
 
-		return $result['album']['release_date'];
+		if(isset($result['album']['release_date'])){
+			return $result['album']['release_date'];
+		}else{
+			return '';
+		}
+
 	}
 
 	function getTrackAlbum($track_id)
@@ -323,7 +325,7 @@
 
 		$result = json_decode($result, true);
 
-		return $result['album']['name'];
+		return isset($result['album']['name'])?$result['album']['name']:'';
 	}
 
 	function getTrackNumber($track_id)
@@ -420,6 +422,37 @@
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="Content/CSS/index.css">
+		<style type="text/css">
+		.track_item{
+			width: 30%;
+		    float: left;
+		    margin: 30px 1.5%;
+		}
+
+		.track_item img{
+			max-width: 100%;
+			height: auto !important;
+		}
+
+		.artistOption,.albumOption,.yearOption{
+			text-transform: capitalize;
+		}
+
+		#artistFilter,#albumFilter,#yearFilter{
+			text-transform: capitalize;
+		}
+		.filtersTitle{
+			color:#fff;
+		}
+		#noResult{
+			color: #fff;
+			display: none;
+		}
+		.filters{
+			color: #fff;
+		}
+		</style>
+		<meta charset="UTF-8">
 	</head>
 
 	<body>
@@ -449,33 +482,6 @@
 		</div>
 
 		<div class="registerBox" id="registerBox">
-			<form name="userRegistration" class="regBox" method="post" action="">
-				<div class="block">
-          			<input type="text" name="username" placeholder="Username" value="<?PHP print $uname;?>">
-          			<label style="font-family:'Montserrat'; font-weight:normal;font-size:20px; color:#ffffff"><?PHP print $errorMessage;?></label>
-        		</div>
-
-        		<div>
-          			<input type="text" name="email" placeholder="E-mail" value="<?PHP print $email;?>">
-        		</div>
-
-        		<div>
-          			<input id="password" type="password" name="password" placeholder="Password" value="<?PHP print $pword;?>" onkeyup='check();'>
-        		</div>
-
-        		<div>
-          			<input id="confirm_password" type="password" name="" placeholder="Repeat password" onkeyup='check();'>
-        		</div>
-
-        		<span id='message'></span>
-
-        		<input type="submit" name="" value="Register">
-
-        		<div>
-        			<h1 style="font-family:'Arial'; font-weight:normal;font-size:20px">Already have an account?</h1>
-        			<button onclick="toggleLoginBox()" style="font-family:'Nugget Medium';font-weight:normal;font-size:20px; color: #ffffff; text-decoration: none;">Log in.</button>
-      			</div>
-      		</form>
 		</div>
 
 		<div class="fadein">
@@ -517,12 +523,21 @@
 				
 				$track_info = createTrackPage($track['id']);
 
+				$my_id = $track['id'];
+	
+
 				?>
 				<div class="track_item" data-track_album = "<?php echo $track_info['album']; ?>" data-track_artists="
 				<?php echo $track_info['artists']; ?>" data-track_year="<?php echo $track_info['release_date']; ?>">
 					<a href="Tracks/<?php echo $track['id']; ?>.php">
 						<img src="<?php echo $track['image']; ?>" alt = "<?php echo $track['title']; ?>" width="500">
-					</a>
+						</a>
+						<div class="downloadForm" >
+							<form class="form-inline" method="post" action=<?php echo "scripts/generate_pdf.php?id=".$my_id; ?> > <!-- .$row['my_id']; -->
+								<button type="submit" id="pdf" name="generate_pdf" class="btn-btn-primary"><i class="fa fa-pdf" aria-hidden="true"></i>
+								Generate PDF</button>
+							</form>
+		 				</div>
 				</div>
 				<?php 
  			}?>
@@ -532,7 +547,9 @@
 			<button>View All</button> -->
 		</div>
 
-
+<!-- 		<div class="featured">
+			<p>test</p>
+		</div> -->
 
 	<script>
 		function toggleLoginBox()
@@ -657,6 +674,8 @@
 			}
 
 			return ok;
+		}
+
 	</script>
 
 	</body>
