@@ -43,10 +43,12 @@ if($ok==1){
    
 ?>
 
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
 
   <link rel="stylesheet" href="register_style.css">
+  <title>Beatdeck</title>
 
 </head>
 
@@ -54,18 +56,18 @@ if($ok==1){
 	<div class="topbar">
 
     <a class="logo_link" href="index.php">
-      <img src="..\Content\Logo\Logo.png" class="logo" alt="Logo" width="140" height="40">
+      <img src="../Content/Logo/Logo.png" class="logo" alt="Logo" width="140" height="40">
     </a>
 
 			<div class="searchbox">
 				<input type="text" placeholder="Search..." style="font-family:'Montserrat'; font-weight:normal;font-size:20px">
-				<img src="..\Content\Images\Icons\Search.png" class="search_icon" width="25" height="25">
+				<img src="../Content/Images/Icons/Search.png" class="search_icon" alt="Logo-search" width="25" height="25">
 			</div>
 	</div>
 
 
   <div>
-  	<form name="userRegistration" class="regBox" method="post" action="">
+  	<form name="userRegistration" class="regBox" method="post" >
       <h1 style="font-family:'Montserrat'; font-weight:normal;font-size:30px">Register</h1>
 
           <input type="text" id="username" placeholder="Nume Utilizator" name="username" title="Doar caractere alfanumerice ! Minim 5." pattern="[a-zA-Z0-9]{5,}" required><br>
@@ -103,10 +105,7 @@ if($ok==1){
 
   </div>
 
-	</body>
-</html>
-
-<script>
+  <script>
 
   var check = function() {
   if (document.getElementById('pass').value ==
@@ -120,3 +119,7 @@ if($ok==1){
 }
 
 </script>
+
+	</body>
+</html>
+

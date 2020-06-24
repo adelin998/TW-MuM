@@ -157,38 +157,7 @@
 			<p>Album: ".$t_album." (Track number on album: ".getTrackNumber($track_id)." |  Disc Number: ".getDiscNumber($track_id).")</p>
 			<p>Release Date: ".$t_release_date."</p>
 
-			<h1>Comments</h1>
-			<?php
-				if(!isset(\$_SESSION['logged']))
-				{
-					?>
-					<p>There are no comments on this track yet.</p>
-					<button>Add a comment...</button>
-				<?php }
-
-				else
-				{
-					?>
-					<p>There are no comments on this track yet. Log in or sign up to add a comment.</p>
-				<?php } ?>
-		</div>
-
-		<script>
-		function toggleLoginBox()
-		{
-			var show = document.getElementById(\"loginBox\");
-
-			if( show.style.display === \"none\" )
-			{
-				show.style.display = \"block\";
-			}
-			else
-			{
-				show.style.display = \"none\";
-			}
-		}
-	</script>
-
+			
 	</body>
 </html>";
 
@@ -421,6 +390,7 @@
 <html>
 
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="../Content/CSS/index.css">
 		<style type="text/css">
 		.track_item{
@@ -451,6 +421,44 @@
 		.filters{
 			color: #fff;
 		}
+
+		@media screen and (max-width: 500px)
+{
+	h1 {
+    text-align: center;
+    font-family: 'Montserrat';
+    color: #ffffff;
+    animation-name: entrance;
+    animation-duration: 1.5s;
+    clear: both !important;
+    display: block !important;
+    padding-top: 20px !important;
+	}
+
+	select
+	{
+		width: 92% !important;
+		clear: both !important;
+		display: block !important;
+		margin: 10px auto !important;
+		padding: 5px !important;
+	}
+
+	.track_item {
+    width: 96%;
+    float: left;
+    margin: 30px 2%;
+    width: ;
+    text-align: center;
+	}
+
+	button#pdf
+	{
+    width: 100% !important;
+    padding: 5px 0px !important;
+    text-align: center !important;
+	}
+}
 		</style>
 		<meta charset="UTF-8">
 	</head>
@@ -537,7 +545,7 @@
 						<img src="<?php echo $track['image']; ?>" alt = "<?php echo $track['title']; ?>" width="500">
 						</a>
 						<div class="downloadForm" >
-							<form class="form-inline" method="post" action=<?php echo "scripts/generate_pdf.php?id=".$my_id; ?> > <!-- .$row['my_id']; -->
+							<form class="form-inline" method="post" action=<?php echo "../Pages/scripts/generate_pdf.php?id=".$my_id; ?> > <!-- .$row['my_id']; -->
 								<button type="submit" id="pdf" name="generate_pdf" class="btn-btn-primary"><i class="fa fa-pdf" aria-hidden="true"></i>
 								Generate PDF</button>
 							</form>

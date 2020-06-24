@@ -2,7 +2,7 @@
 
 session_start();
 
-define('USERS_IMAGES', 'Content/Images/Users/');
+define('USERS_IMAGES', '../Content/Images/Users/');
 
 $page_title = 'Profile';
 
@@ -49,12 +49,14 @@ $user = $query->fetch_assoc();
 if(file_exists(USERS_IMAGES.$user['image'])){
 	$image = USERS_IMAGES.$user['image'];
 }else{
-	$image = '..\Content\Images\Users\default.png';//imagine default, asta trebuie sa o schimbi
-	// $image = 'Content\Images\Icons\profile.png';
+	$image = '../Content/Images/Users/default.png';//imagine default, asta trebuie sa o schimbi
+	// $image = 'Content/Images/Icons/profile.png';
 }
 /* end afisare informatii user */
 
 ?>
+
+
 
 <link rel="stylesheet" type="text/css" href="../Content/CSS/index.css">
 <link rel="stylesheet" type="text/css" href="../Content/CSS/userProfile.css">

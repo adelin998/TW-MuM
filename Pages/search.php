@@ -31,7 +31,7 @@ require('../includes/top.php');
 <?php  include('../includes/topbar.php'); ?>
 
 <div class="firstPageTitle">
-	<h2>Search Results:&ensp;</h2>
+	<h2 style="color: white; margin-left: 20px; font-family: 'Nugget Medium';"> Search Results:&ensp;</h2> 
 </div>
 
 <?php 

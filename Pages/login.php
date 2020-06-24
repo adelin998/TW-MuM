@@ -39,9 +39,11 @@ $ok=-1;
  }
 
 ?>
-
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Beatdeck</title>
 <style>
 
 @font-face {
@@ -90,42 +92,6 @@ div.box:hover img {
   opacity: 0.2;
 }
 
-.sidebar {
-	height: 100%;
-	width: 160px;
-	position: fixed;
-	z-index: 1;
-	top: 0;
-	left: 0;
-	background-color: linear-gradient(#111111, #333333);
-	padding-top: 5px;
-}
-
-.sidebar-menu {
-  padding-top: 45px;
-  padding-left: 15px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #ffffff;
-  display: block;
-
-  opacity: 0.5;
-  -webkit-transition: opacity 0.3s ease-in-out;
-  -moz-transition: opacity 0.3s ease-in-out;
-  transition: opacity 0.3s ease-in-out;
-}
-
-.sidebar img {
-	padding-left: 20px;
-}
-
-.sidebar a:hover {
-
-	opacity: 1.0;
-	-webkit-transition: opacity 0.3s ease-in-out;
-	-moz-transition: opacity 0.3s ease-in-out;
-    transition: opacity 0.3s ease-in-out;
-}
 
 .bottom {
 	position: absolute;
@@ -314,6 +280,41 @@ div.box:hover img {
   text-align: center;
 }
 
+
+@media screen and (max-width: 420px) {
+  body{
+    width: 100%;
+      padding-top: 0px;
+      padding-left:0px;
+      margin:0 auto;
+  }
+
+  .loginBox{
+     width: 230px;
+      height: 450px;
+      margin-left: 0px;
+      position: absolute;
+      top: 50%;
+      border-radius: 20px;
+  }
+
+   .loginBox input[type = "text"]:focus{
+  width: 100% !important;
+  padding: 12px 0px;
+  border-color: white;
+}
+
+.loginBox input[type = "password"]:focus{
+  width: 100% !important;
+  padding: 12px 0px;
+  border-color: white;
+}
+
+
+}
+
+
+
 </style>
 
 </head>
@@ -321,11 +322,11 @@ div.box:hover img {
 <body>
 	<div class="topbar">
   <a class="logo_link" href="index.php">
-      <img src="..\Content\Logo\Logo.png" class="logo" alt="Logo" width="140" height="40">
+      <img src="../Content/Logo/Logo.png" class="logo" alt="Logo" width="140" height="40">
     </a>
 			<div class="searchbox">
 				<input type="text" placeholder="Search..." style="font-family:'Montserrat'; font-weight:normal;font-size:20px">
-				<img src="..\Content\Images\Icons\Search.png" class="search_icon" width="25" height="25">
+				<img src="../Content/Images/Icons/Search.png" class="search_icon" alt="Logo-serch" width="25" height="25">
 			</div>
 
 			<div class="nowplaying">
