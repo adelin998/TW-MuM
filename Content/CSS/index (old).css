@@ -162,18 +162,6 @@ body
 	text-align: center;
 }
 
-.box
-{
-	display: inline-block;
-}
-
-.box img
-{
-	width: 300px;
-	height: 300px;
-	padding: 20px;
-}
-
 .showcase img
 {
 	width: 500px;
@@ -291,16 +279,6 @@ h1
 }
 
 .comments h1
-{
-	color: white;
-
-	font-family: 'Nugget Medium';
-	font-size: 40px;
-
-	padding-left: 280px;
-}
-
-.comments p
 {
 	color: white;
 
