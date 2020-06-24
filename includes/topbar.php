@@ -19,56 +19,22 @@
 	</div>
 	-->
 
-	<style type="text/css">
 
-		.searchbox
-		{
-			position: relative;
-		}
-
-		.autosuggest
-		{
-			display: none;
-
-			position: absolute;
-			top: 50px;
-			left: 38px;
-			background: #b4f5ff;
-			min-width: 305px;
-			border: 1px solid;
-			border-radius: 10px;
-			max-width: 400px;
-			padding: 6px;
-			box-sizing: border-box;
-		}
-
-		.autoCompleteResult
-		{
-			cursor: pointer;
-
-		}
-
-		.autoCompleteResult:hover
-		{
-			background: #fff;
-		}
-
-	</style>
 
 
 	<div class="topbar">
 			<div class="menu">
-					<img src="..\Content\Images\Icons\MenuIcon.png">
+					<img src="../Content/Images/Icons/MenuIcon.png" alt="menuicom">
 			</div>
 
-			<a href="..\Pages\index.php">
-				<img class="logo" src="..\Content/Logo/Logo.png">
+			<a href="../Pages/index.php">
+				<img class="logo" src="../Content/Logo/Logo.png" alt="logiiimd">
 			</a>
 
 			<div class="searchbox">
 				<form  id="search_form" action="<?php echo '../Pages/search.php';?>" method="get">
 					<input autocomplete="off" id="site_search" type="text" name="search_query" placeholder="Search..." onkeyup="autoComplete(this.value)">
-					<img src="..\Content\Images\Icons\Search.png">
+					<img src="../Content/Images/Icons/Search.png" alt="Searchiconnn">
 				</form>
 
 				<div class="autosuggest">
@@ -84,7 +50,7 @@
 				{
 					?>
 					<button style="cursor:pointer" onclick="window.location.href='../Pages/login.php'">Login</button>
-					<img src="..\Content\Images\Icons\Separator.png">
+					<img src="../Content/Images/Icons/Separator.png" alt="separatorind">
 					<button style="cursor:pointer" onclick="window.location.href='../Pages/register.php'">Register</button>
 				<?php }
 
@@ -92,13 +58,13 @@
 				{
 					?>
 					<button style="cursor:pointer" onclick="window.location.href='../Pages/userProfile.php'"><?php echo $_SESSION['login_user'];?></button>
-					<img src="..\Content\Images\Icons\Separator.png">
+					<img src="../Content/Images/Icons/Separator.png" alt="sepataror=imggg">
 					<button style="cursor:pointer" onclick="window.location.href='../Pages/logout.php'">Log Out</button>
 				<?php } ?>
 			</div>
 		</div>
 
-		<script type="text/javascript">
+		<script>
 			var autoCompleteDiv = document.getElementsByClassName('autosuggest')[0];
 
 			function autoComplete(keyword)
@@ -143,7 +109,7 @@
     				}
   				};
 
-  				xhttp.open("GET", "http://localhost:8080/proiect/ajaxAutocomplete.php?keyword="+keyword, true);
+  				xhttp.open("GET", "http://localhost/proiect/ajaxAutocomplete.php?keyword="+keyword, true);
   				xhttp.send();
 			}
 
