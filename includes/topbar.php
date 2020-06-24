@@ -19,6 +19,43 @@
 	</div>
 	-->
 
+	<style type="text/css">
+
+		.searchbox
+		{
+			position: relative;
+		}
+
+		.autosuggest
+		{
+			display: none;
+
+			position: absolute;
+			top: 50px;
+			left: 38px;
+			background: #b4f5ff;
+			min-width: 305px;
+			border: 1px solid;
+			border-radius: 10px;
+			max-width: 400px;
+			padding: 6px;
+			box-sizing: border-box;
+		}
+
+		.autoCompleteResult
+		{
+			cursor: pointer;
+
+		}
+
+		.autoCompleteResult:hover
+		{
+			background: #fff;
+		}
+
+	</style>
+
+
 	<div class="topbar">
 			<div class="menu">
 					<img src="..\Content\Images\Icons\MenuIcon.png">
@@ -29,10 +66,15 @@
 			</a>
 
 			<div class="searchbox">
-				<form  action="<?php echo '/Proiect-TW/Pages/search.php';?>" method="get">
-					<input type="text" name="search_query" placeholder="Search...">
+				<form  id="search_form" action="<?php echo '../Pages/search.php';?>" method="get">
+					<input autocomplete="off" id="site_search" type="text" name="search_query" placeholder="Search..." onkeyup="autoComplete(this.value)">
 					<img src="..\Content\Images\Icons\Search.png">
 				</form>
+
+				<div class="autosuggest">
+					
+				</div>
+
 			</div>
 
 			<div class="auth">
@@ -55,3 +97,73 @@
 				<?php } ?>
 			</div>
 		</div>
+
+		<script type="text/javascript">
+			var autoCompleteDiv = document.getElementsByClassName('autosuggest')[0];
+
+			function autoComplete(keyword)
+			{
+				autoCompleteDiv.innerHTML = "";
+
+				if(keyword == "")
+				{
+					autoCompleteDiv.style.display = "none";
+					return;
+				}
+
+				var xhttp = new XMLHttpRequest();
+
+  				xhttp.onreadystatechange = function() 
+  				{
+    				if (this.readyState == 4 && this.status == 200) 
+    				{
+
+    			 		let data = JSON.parse(this.responseText);
+
+    			 		for(let i = 0; i < data['results'].length; i++)
+    			 		{
+    			 			autoCompleteDiv.innerHTML += `<p class="autoCompleteResult">${data['results'][i]}</p>`;
+    			 		}
+
+    			 		if(data['results'].length > 0)
+    			 			autoCompleteDiv.style.display = "block";
+    			 		else
+    			 			autoCompleteDiv.style.display = "none";
+
+    			 		let autoCompleteResults = document.getElementsByClassName('autoCompleteResult');
+
+    			 		for(let i = 0; i < autoCompleteResults.length; i++)
+    			 		{
+    			 			autoCompleteResults[i].addEventListener('click', function ()
+    			 			{ 
+    			 				document.getElementById('site_search').value = autoCompleteResults[i].innerHTML;
+    			 				document.getElementById('search_form').submit();
+    			 			});
+    			 		}
+    				}
+  				};
+
+  				xhttp.open("GET", "http://localhost:8080/proiect/ajaxAutocomplete.php?keyword="+keyword, true);
+  				xhttp.send();
+			}
+
+			document.addEventListener("click", (evt) => {
+    		const autosuggestDiv = document.getElementsByClassName("autosuggest")[0];
+    		let targetElement = evt.target; 
+
+    		do
+    		{
+        		if (targetElement == autosuggestDiv)
+        		{
+            	return;
+        		}
+
+       		 	targetElement = targetElement.parentNode;
+   			} while (targetElement);
+
+    		autosuggestDiv.style.display = "none";
+    		autosuggestDiv.innerHTML = "";
+			});
+
+
+		</script>
