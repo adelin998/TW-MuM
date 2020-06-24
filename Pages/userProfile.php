@@ -2,6 +2,8 @@
 
 session_start();
 
+define('USERS_IMAGES', 'Content/Images/Users/');
+
 $page_title = 'Profile';
 
 require('../includes/top.php');
@@ -9,10 +11,10 @@ require('../includes/top.php');
  if(!isset($_SESSION['id_user'])){
  	header('Location: login.php');
  }else{
-	 $user_id = $_SESSION['id_user'];
+	 $user_id = (int)$_SESSION['id_user'];
  }
 
-$user_id = 1;//presupunem ca s logat 
+//$user_id = 1;//presupunem ca s logat 
 
 
 /* modificare informatii user */
