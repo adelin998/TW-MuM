@@ -4,33 +4,10 @@
    		define('DB_USERNAME', 'root');
   		define('DB_PASSWORD', '');
    		define('DB_DATABASE', 'mum');
-   
-
 
 	session_start();
 
 	$comment="";
-
-/*
-	if ($_SERVER['REQUEST_METHOD'] == 'POST')
-	{
-  		require 'configure.php';
-
-  		$database = "mum";
-
-  		$db_found = new mysqli(DB_SERVER, DB_USER, DB_PASS, $database );
-
-  		if ($db_found)
-  		{    
-    		$SQL = $db_found->prepare('SELECT message_content FROM comments');
-    		$SQL->bind_param('s', $uname);
-    		$SQL->execute();
-    		$result = $SQL->get_result();
-    		print "found";
-    	}
-    }
-
-    */
 
 	function regenerateToken()
 	{
@@ -104,6 +81,8 @@
 			$image = getTrackCover($id);
 
 			array_push($tracks, array( 'id' => $id, 'title' => $title, 'artists' => $artists, 'duration' => $duration,'image' => $image ) );
+
+
 		}
 
 		return $tracks;
@@ -118,13 +97,14 @@
 		$t_artists = getTrackArtist($track_id);
 		$t_t_artists= implode(' , ', $t_artists);
 		$t_album = getTrackAlbum($track_id);
+		$track_image = getTrackCover($track_id);
 
 		$t_release_date = getTrackReleaseDate($track_id);
 
 		if (file_exists("Content/Images/Albums/".$track_id.'.jpg') == FALSE)
-			file_put_contents("Content/Images/Albums/".$track_id.'.jpg', file_get_contents(getTrackCover($track_id)));
-		$sql = "INSERT INTO songs (id,title,artist,album,data) 
-		VALUES ('$track_id','$t_title','$t_t_artists','$t_album','$t_release_date')";
+			file_put_contents("Content/Images/Albums/".$track_id.'.jpg', file_get_contents($track_image));
+		$sql = "INSERT INTO songs (id,title,artist,album,data, image) 
+		VALUES ('$track_id','$t_title','$t_t_artists','$t_album','$t_release_date', '$track_image')";
 		if ($db->query($sql) === TRUE) {
   			$ok=1;}
 		else $ok=0;
@@ -135,12 +115,17 @@
 		{
 			$myfile = fopen("Tracks/".$track_id.".php", "w");
 
-			$page_content = "<html>
+			$page_content = "
+			<?php
+				session_start();
+			?>
+	<html>
 	<head>
 		<link rel=\"stylesheet\" type=\"text/css\" href=\"../Content/CSS/index.css\">
 	</head>
 
 	<body>
+		<!--
 		<div class=\"topbar\">
 			<div class=\"menu\">
 					<img src=\"../Content\Images\Icons\MenuIcon.png\">
@@ -161,7 +146,10 @@
 				<button onclick=\"myFunction()\">Register</button>
 			</div>
 		</div>
-				$title
+		-->
+
+		<?php  include('../includes/topbar.php'); ?>
+
 		<div class=\"metadata\">
 			<img src=\"../Content/Images/Albums/".$track_id.".jpg\">
 			<p>Title: ".getTrackName($track_id)."</p>
@@ -203,7 +191,8 @@
 		$track_info = array(
 							'artists' => implode(',', $t_artists),
 							'album' => $t_album,
-							'release_date' => $year
+							'release_date' => $year,
+							'image' => $track_image
 		);
 
 		return $track_info;
@@ -420,6 +409,7 @@
 ?>
 
 <html>
+
 	<head>
 		<link rel="stylesheet" type="text/css" href="Content/CSS/index.css">
 		<style type="text/css">
@@ -456,7 +446,7 @@
 	</head>
 
 	<body>
-		<div class="topbar">
+		<!--<div class="topbar">
 			<div class="menu">
 					<img src="Content\Images\Icons\MenuIcon.png">
 			</div>
@@ -476,6 +466,10 @@
 				<button onclick="toggleRegisterBox()">Register</button>
 			</div>
 		</div>
+	-->
+		<?php
+			include("../includes/topbar.php");
+			?>
 
 		<div class="loginBox" id="loginBox">
 			<p>Username:</p>
