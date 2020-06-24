@@ -1,0 +1,301 @@
+@font-face
+{
+	font-family: 'Nugget Medium';
+	font-style: normal;
+	font-weight: normal;
+	src: local('Nugget Medium'), url('NuggetMed.woff') format('woff');
+}
+
+body
+{
+	margin: 0;
+	background: linear-gradient(to left, #333333, #111111);
+}
+
+.topbar
+{
+	background: linear-gradient(to left, #333333, #111111);
+
+	height: 60px;
+
+	padding-bottom: 30px;
+}
+
+.menu img
+{
+	float: left;
+	padding-left: 15px;
+	padding-top: 16px;
+	padding-right: 20px;
+
+	border: none;
+	width: 25px;
+	height: 25px;
+}
+
+.logo
+{
+	float: left;
+
+	width: 140px;
+	height: 40px;
+
+	padding: 10px 10px;
+
+	opacity: 1;
+	-webkit-transition: opacity 0.5s ease-in-out;
+	-moz-transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.logo:hover
+{
+	opacity: 0.5;
+	-webkit-transition: opacity 0.5s ease-in-out;
+	-moz-transition: opacity 0.5s ease-in-out;
+	transition: opacity 0.5s ease-in-out;
+}
+
+.searchbox
+{
+	float: left;
+
+	padding-left: 40px;
+	padding-top: 12px;
+}
+
+.searchbox input
+{
+
+	width: 300px;
+	height: 35px;
+
+	border: none;
+	border-radius: 5px;
+	padding-left: 10px;
+
+	font-family: 'Montserrat';
+	font-weight: normal;
+	font-size: 17px;
+}
+
+.searchbox img
+{
+	width: 25px;
+	height: 25px;
+
+	position: absolute;
+
+	margin-left: -35px;
+	margin-top: 5px;
+
+	border: 0px;
+}
+
+.auth
+{
+	float: right;
+
+	padding-right: 5px;
+	padding-top: 13px;
+	font-weight: normal;
+}
+
+.auth button
+{
+	background-color: transparent;
+	border: none;
+
+	padding-right: 10px;
+
+	font-family: 'Nugget Medium';
+	font-size: 23px;
+
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.auth img
+{
+	width: 20px;
+	height: 20px;
+
+	margin-bottom: -2px;
+}
+
+.auth button:hover
+{
+	color: #f1f1f1;
+}
+
+.loginBox
+{
+	display: none;
+	float: right;
+	margin-right: 10px;
+
+	border: 10px;
+	border-color: black;
+	border-radius: 5px;
+
+	width: 300px;
+	height: 400px;
+
+	background-color: transparent;
+}
+
+.registerBox
+{
+	display: none;
+	float: right;
+	margin-right: 10px;
+
+	border: 10px;
+	border-color: white;
+	border-radius: 5px;
+
+	width: 300px;
+	height: 400px;
+
+	background-color: #131313;
+
+	text-align: center;
+}
+
+.box
+{
+	display: inline-block;
+}
+
+.box img
+{
+	width: 300px;
+	height: 300px;
+	padding: 20px;
+}
+
+.showcase img
+{
+	width: 500px;
+	height: 500px;
+}
+
+.metadata
+{
+	margin-top: 50px;
+}
+
+.metadata img
+{
+	text-align: left;
+	margin-left: 800px;
+	text-align: center;
+	width: 500px;
+	height: 500px;
+}
+
+.metadata p
+{
+	color: white;
+
+	font-family: 'Nugget Medium';
+	font-size: 40px;
+
+	padding-left: 280px;
+}
+
+@keyframes entrance
+{
+	from { margin-top: 50px; }
+	to { margin-top: 21px; }
+}
+
+h1
+{
+	text-align: center;
+
+	font-family: 'Montserrat';
+	color: #ffffff;
+
+	animation-name: entrance;
+	animation-duration: 1.5s;
+}
+
+.fadein
+{
+	animation: fadeIn ease 1.5s;
+	-webkit-animation: fadeIn ease 1.5s;
+	-moz-animation: fadeIn ease 1.5s;
+	-o-animation: fadeIn ease 1.5s;
+	-ms-animation: fadeIn ease 1.5s;
+}
+
+@keyframes fadeIn
+{
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-moz-keyframes fadeIn
+{
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-webkit-keyframes fadeIn
+{
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-o-keyframes fadeIn
+{
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-ms-keyframes fadeIn
+{
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+}
+
+.featured
+{
+	display: block;
+
+	border-color: red;
+
+	color: #ffffff;
+
+	width: 100%;
+}
+
+.comments h1
+{
+	color: white;
+
+	font-family: 'Nugget Medium';
+	font-size: 40px;
+
+	padding-left: 280px;
+}
