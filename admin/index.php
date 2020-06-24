@@ -16,7 +16,9 @@
 
 
 <!DOCTYPE html>
+<html lang="en">
 <head>
+  <title>Beatdeck</title>
 
 <style>
 
@@ -64,43 +66,6 @@ div.box img {
 
 div.box:hover img {
   opacity: 0.2;
-}
-
-.sidebar {
-	height: 100%;
-	width: 160px;
-	position: fixed;
-	z-index: 1;
-	top: 0;
-	left: 0;
-	background-color: linear-gradient(#111111, #333333);
-	padding-top: 5px;
-}
-
-.sidebar-menu {
-  padding-top: 45px;
-  padding-left: 15px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #ffffff;
-  display: block;
-
-  opacity: 0.5;
-  -webkit-transition: opacity 0.3s ease-in-out;
-  -moz-transition: opacity 0.3s ease-in-out;
-  transition: opacity 0.3s ease-in-out;
-}
-
-.sidebar img {
-	padding-left: 20px;
-}
-
-.sidebar a:hover {
-
-	opacity: 1.0;
-	-webkit-transition: opacity 0.3s ease-in-out;
-	-moz-transition: opacity 0.3s ease-in-out;
-    transition: opacity 0.3s ease-in-out;
 }
 
 .bottom {
