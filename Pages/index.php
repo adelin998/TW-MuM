@@ -119,16 +119,18 @@
 			<?php
 				session_start();
 			?>
-	<html>
+	<!DOCTYPE html>
+	<html >
 	<head>
 		<link rel=\"stylesheet\" type=\"text/css\" href=\"../Content/CSS/index.css\">
+		 <title>Beatdeck</title>
 	</head>
 
 	<body>
 		<!--
 		<div class=\"topbar\">
 			<div class=\"menu\">
-					<img src=\"../Content\Images\Icons\MenuIcon.png\">
+					<img src=\"../Content/Images/Icons/MenuIcon.png\">
 			</div>
 
 			<a href=\"../index.php\">
@@ -137,12 +139,12 @@
 
 			<div class=\"searchbox\">
 					<input type=\"text\" placeholder=\"Search...\">
-					<img src=\"../Content\Images\Icons\Search.png\">
+					<img src=\"../Content/Images/Icons/Search.png\">
 			</div>
 
 			<div class=\"auth\">
 				<button onclick=\"toggleLoginBox()\">Login</button>
-				<img src=\"../Content\Images\Icons\Separator.png\">
+				<img src=\"../Content/Images/Icons/Separator.png\">
 				<button onclick=\"myFunction()\">Register</button>
 			</div>
 		</div>
@@ -386,13 +388,15 @@
 	$tracks = getPlaylistTracks($playlist_id);
 
 ?>
-
-<html>
+<!DOCTYPE html>
+<html  lang="en">
 
 	<head>
+		<meta charset="UTF-8">
+		<title>Beatdeck</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="../Content/CSS/index.css">
-		<style type="text/css">
+		<style>
 		.track_item{
 			width: 30%;
 		    float: left;
@@ -448,7 +452,6 @@
     width: 96%;
     float: left;
     margin: 30px 2%;
-    width: ;
     text-align: center;
 	}
 
@@ -459,32 +462,16 @@
     text-align: center !important;
 	}
 }
+
+	<?php
+			include("../includes/topbatcss.php");
+			?>
 		</style>
-		<meta charset="UTF-8">
+
 	</head>
 
 	<body>
-		<!--<div class="topbar">
-			<div class="menu">
-					<img src="Content\Images\Icons\MenuIcon.png">
-			</div>
-
-			<a href="index.php">
-				<img class="logo" src="Content/Logo/Logo.png">
-			</a>
-
-			<div class="searchbox">
-					<input type="text" placeholder="Search...">
-					<img src="Content\Images\Icons\Search.png">
-			</div>
-
-			<div class="auth">
-				<button onclick="toggleLoginBox()">Login</button>
-				<img src="Content\Images\Icons\Separator.png">
-				<button onclick="toggleRegisterBox()">Register</button>
-			</div>
-		</div>
-	-->
+		
 		<?php
 			include("../includes/topbar.php");
 			?>
@@ -545,8 +532,9 @@
 						<img src="<?php echo $track['image']; ?>" alt = "<?php echo $track['title']; ?>" width="500">
 						</a>
 						<div class="downloadForm" >
-							<form class="form-inline" method="post" action=<?php echo "../Pages/scripts/generate_pdf.php?id=".$my_id; ?> > <!-- .$row['my_id']; -->
-								<button type="submit" id="pdf" name="generate_pdf" class="btn-btn-primary"><i class="fa fa-pdf" aria-hidden="true"></i>
+							<form class="form-inline" method="get" action="../Pages/scripts/generate_pdf.php"> <!-- .$row['my_id']; -->
+								<input type="hidden" name="id" value="<?php echo $my_id; ?>"/>
+								<button type="submit" id="<?php echo $my_id; ?>" name="generate_pdf" class="btn-btn-primary"><i class="fa fa-pdf" aria-hidden="true"></i>
 								Generate PDF</button>
 							</form>
 		 				</div>
