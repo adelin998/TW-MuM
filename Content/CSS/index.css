@@ -309,3 +309,7 @@ h1
 
 	padding-left: 280px;
 }
+
+@media screen and (max-width: 420px) {
+
+}
